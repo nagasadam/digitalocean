@@ -1,0 +1,6 @@
+{
+    "API_URL": "https://dimpleme-apis.herokuapp.com",
+    "HOMEPAGE_URL": "https://dimpleme.herokuapp.com",
+    "API_LOCAL_URL": "http://localhost:3000",
+    "HOMEPAGE_LOCAL_URL": "http://localhost:8080"
+}
