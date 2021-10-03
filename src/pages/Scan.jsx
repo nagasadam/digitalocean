@@ -24,11 +24,11 @@ import QrReader from 'react-qr-reader';
 import { store } from 'react-notifications-component';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import GoogleLogin from 'react-google-login';
-var emailregex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 import { URL_CONSTANTS } from '../../_constants';
+var emailregex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 
 class Scan extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     history.listen((location, action) => {
@@ -44,7 +44,7 @@ class Scan extends React.Component {
       email: '',
       emailState: '',
       focusedEmail: false,
-      password:'',
+      password: '',
       passwordState: '',
       focusedPassword: false,
       dcode: '',
@@ -61,64 +61,64 @@ class Scan extends React.Component {
 
   handleChange(e) {
     const { type, value } = e.target;
-    if(e.target.placeholder == "Enter Code" ){
+    if (e.target.placeholder == "Enter Code") {
       this.setState({ dcode: e.target.value })
     }
-    else{
+    else {
       this.setState({ [type]: value });
     }
-}
-
-handleDcode(e){
-  e.preventDefault();
-  const {dcode, dcodeState} = this.state;
-
-  if(dcode == ''){
-    this.setState({ focusedDcode: true })
-    this.setState(dcode == "" ? { dcodeState: "invalid"} : {dcodeState: "valid"})
   }
 
-  else{
-    this.props.validDcode(dcode);
-  }
-}
+  handleDcode(e) {
+    e.preventDefault();
+    const { dcode, dcodeState } = this.state;
 
-handleForgot(e) {
-  e.preventDefault();
-  const { email, emailState } = this.state;
+    if (dcode == '') {
+      this.setState({ focusedDcode: true })
+      this.setState(dcode == "" ? { dcodeState: "invalid" } : { dcodeState: "valid" })
+    }
 
-  if(email == '' || !emailregex.test(email)){
-    this.setState({ focusedForgot: true })
-    this.setState( email == "" ? { emailState: "invalid"} : {emailState: "valid"})
+    else {
+      this.props.validDcode(dcode);
+    }
   }
-  else{
-    this.setState({ submitted: true });
-    const { email } = this.state;
-    if (email) {
+
+  handleForgot(e) {
+    e.preventDefault();
+    const { email, emailState } = this.state;
+
+    if (email == '' || !emailregex.test(email)) {
+      this.setState({ focusedForgot: true })
+      this.setState(email == "" ? { emailState: "invalid" } : { emailState: "valid" })
+    }
+    else {
+      this.setState({ submitted: true });
+      const { email } = this.state;
+      if (email) {
         this.props.forgot(email)
+      }
     }
   }
-}
 
-handleSubmit(e) {
-  e.preventDefault();
-  const { email, password, emailState, passwordState } = this.state;
+  handleSubmit(e) {
+    e.preventDefault();
+    const { email, password, emailState, passwordState } = this.state;
 
-  if(email == '' || password == '' || !emailregex.test(email)){
-    this.setState({ focusedEmail: true , focusedPassword: true })
-    this.setState( email == "" ? { emailState: "invalid"} : {passwordState: "invalid"})
-    this.setState( password == "" ? { passwordState: "invalid"} : {emailState: "invalid"})
-  }
-  else{
-    this.setState({ submitted: true });
-    const { email, password } = this.state;
-    if (email && password) {
+    if (email == '' || password == '' || !emailregex.test(email)) {
+      this.setState({ focusedEmail: true, focusedPassword: true })
+      this.setState(email == "" ? { emailState: "invalid" } : { passwordState: "invalid" })
+      this.setState(password == "" ? { passwordState: "invalid" } : { emailState: "invalid" })
+    }
+    else {
+      this.setState({ submitted: true });
+      const { email, password } = this.state;
+      if (email && password) {
         this.props.login(email, password)
+      }
     }
   }
-}
 
-  enableScan(){
+  enableScan() {
     this.setState({ scan: !this.state.scan })
   }
 
@@ -138,18 +138,18 @@ handleSubmit(e) {
 
   facebookResponse = (response) => {
     console.log("response", response)
-    const tokenBlob = new Blob([JSON.stringify({access_token: response.accessToken}, null, 2)], {type : 'application/json'});
+    const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
     const options = {
-        method: 'POST',
-        body: tokenBlob,
-        mode: 'cors',
-        cache: 'default'
+      method: 'POST',
+      body: tokenBlob,
+      mode: 'cors',
+      cache: 'default'
     };
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps) {
     console.log("alert")
-    if(nextProps.alert.message){
+    if (nextProps.alert.message) {
       store.addNotification({
         title: 'Survey',
         message: nextProps.alert.message,
@@ -158,26 +158,26 @@ handleSubmit(e) {
         animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
         animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
         dismiss: {
-          duration: 1000 
+          duration: 1000
         }
       })
     }
-    
-    if(nextProps.survey.exists == true){
+
+    if (nextProps.survey.exists == true) {
       history.push('/survey/' + this.state.dcode)
     }
   }
 
-responseGoogle = (response) => {
-  console.log(response);
-}
+  responseGoogle = (response) => {
+    console.log(response);
+  }
 
 
   render() {
     const { loggingIn } = this.props;
     const alert = this.props.alert;
     const user = this.props.user;
-    const {email, password, dcode, submitted} = this.state;
+    const { email, password, dcode, submitted } = this.state;
     return (
       <>
         <Col lg="5" md="7" xs="0">
@@ -202,39 +202,39 @@ responseGoogle = (response) => {
               </div>
             </CardHeader>
             {this.state.scan
-              ? 
-                <CardBody className="px-lg-5 py-lg-5">
-                  <QrReader
-                    facingMode='environment'
-                    showViewFinder={true}
-                    delay={500}
-                    legacyMode={false}
-                    onError={this.handleError}
-                    onScan={this.handleScan}
-                    style={{ width: '100%' }}
-                  />
-                </CardBody>
-              : null}   
+              ?
               <CardBody className="px-lg-5 py-lg-5">
+                <QrReader
+                  facingMode='environment'
+                  showViewFinder={true}
+                  delay={500}
+                  legacyMode={false}
+                  onError={this.handleError}
+                  onScan={this.handleScan}
+                  style={{ width: '100%' }}
+                />
+              </CardBody>
+              : null}
+            <CardBody className="px-lg-5 py-lg-5">
               <div className="text-center text-muted mb-4">
-              <span className="btn-large--icon">
-                    <img
-                      alt="..."
-                      height="44"
-                      src={"/src/assets/img/icons/smiley/satisfied.png"}
-                    />
-                  </span>
+                <span className="btn-large--icon">
+                  <img
+                    alt="..."
+                    height="44"
+                    src={"/src/assets/img/icons/smiley/satisfied.png"}
+                  />
+                </span>
                 <big className="mx-2">Dimple Me</big>
                 <span className="btn-large--icon">
-                    <img
-                      alt="..."
-                      height="44"
-                      src={"/src/assets/img/icons/smiley/satisfied.png"}
-                    />
-                  </span>
+                  <img
+                    alt="..."
+                    height="44"
+                    src={"/src/assets/img/icons/smiley/satisfied.png"}
+                  />
+                </span>
               </div>
               <Form role="form" onSubmit={(e) => this.handleDcode(e)}>
-                <FormGroup                   
+                <FormGroup
                   className={classnames(
                     "mb-3",
                     { focused: this.state.focusedDcode },
@@ -242,7 +242,7 @@ responseGoogle = (response) => {
                     { "has-success": this.state.dcodeState === "valid" }
                   )}
                 >
-                  <InputGroup 
+                  <InputGroup
                     className={classnames("input-group-merge input-group-alternative", {
                       "is-invalid": this.state.dcodeState === "invalid"
                     })}
@@ -255,18 +255,18 @@ responseGoogle = (response) => {
                             { "text-danger": this.state.dcodeState === "invalid" },
                             { "text-success": this.state.dcodeState === "valid" }
                           )}
-                         />
+                        />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input 
-                      placeholder="Enter Code" 
-                      type="text" 
+                    <Input
+                      placeholder="Enter Code"
+                      type="text"
                       autoComplete="new-dcode"
                       className={classnames(
                         { "text-danger": this.state.dcodeState === "invalid" },
                         { "text-success": this.state.dcodeState === "valid" }
                       )}
-                      value={dcode} 
+                      value={dcode}
                       onChange={(e) => this.handleChange(e)}
                       onFocus={() => this.setState({ focusedDcode: true })}
                       onBlur={() => this.setState({ focusedDcode: false })}
@@ -283,7 +283,7 @@ responseGoogle = (response) => {
                 </div>
               </Form>
             </CardBody>
-            
+
           </Card>
         </Col>
       </>
