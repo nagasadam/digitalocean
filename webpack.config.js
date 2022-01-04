@@ -7,11 +7,13 @@ const { API_URL } = require('./_constants/config.json')
 module.exports = {
     entry: [
         './src/index.jsx'
-    ],
-    output: {
-        path: path.join(__dirname, "public/build/"),
+    ], output: {
+        path: path.resolve(__dirname, "build"), // change this
         publicPath: '/',
         filename: 'bundle.js'
+    },
+    devServer: {
+        contentBase: "./build",
     },
     mode: 'development',
     resolve: {
@@ -21,7 +23,11 @@ module.exports = {
         rules: [
             {
                 test: /\.jsx?$/,
-                loader: 'babel-loader'
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env', '@babel/preset-react']
+                }
             },
             {
                 test: /\.s[ac]ss$/i,
@@ -54,7 +60,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html'
+            template: path.join(__dirname, "src", "index.html"),
         }),
         new webpack.HotModuleReplacementPlugin({
             // Options...
