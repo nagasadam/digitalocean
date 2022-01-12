@@ -58,6 +58,7 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             { from: "src/assets/img", to: "src/assets/img" },
+            { from:  "_redirects", to: "_redirects"}
         ]),
         new webpack.HotModuleReplacementPlugin({
             // Options...
