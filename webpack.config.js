@@ -21,7 +21,6 @@ module.exports = {
     },
     module: {
         rules: [
-            // { test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/, loader: "file-loader" },
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
@@ -50,13 +49,7 @@ module.exports = {
                 use: [
                     'file-loader',
                 ]
-            },
-            // {
-            //     test: /\.(gif|png|jpe?g|svg)$/i,
-            //     use: [
-            //         'file-loader'
-            //     ],
-            // }
+            }
         ]
     },
     plugins: [
@@ -65,7 +58,7 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             { from: "src/assets/img", to: "src/assets/img" },
-          ]),
+        ]),
         new webpack.HotModuleReplacementPlugin({
             // Options...
         })
