@@ -1,5 +1,5 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 var webpack = require('webpack');
 var path = require('path');
 const { API_URL } = require('./_constants/config.json')
@@ -21,7 +21,7 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/, loader: "file-loader" },
+            // { test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/, loader: "file-loader" },
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
@@ -46,23 +46,26 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
                 use: [
                     'file-loader',
                 ]
             },
-            {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                    'file-loader'
-                ],
-            }
+            // {
+            //     test: /\.(gif|png|jpe?g|svg)$/i,
+            //     use: [
+            //         'file-loader'
+            //     ],
+            // }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "src", "index.html"),
         }),
+        new CopyWebpackPlugin([
+            { from: "src/assets/img", to: "src/assets/img" },
+          ]),
         new webpack.HotModuleReplacementPlugin({
             // Options...
         })
