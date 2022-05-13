@@ -1,5 +1,5 @@
 {
-    "API_URL": "https://dimpleme-apis.herokuapp.com",
+    "API_URL": "https://dimple-me-api.herokuapp.com",
     "HOMEPAGE_URL": "https://dimplemesurvey.netlify.app",
     "API_LOCAL_URL": "http://localhost:3000",
     "HOMEPAGE_LOCAL_URL": "http://localhost:8080"
