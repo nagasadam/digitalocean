@@ -66,7 +66,8 @@ function register(user) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
+        mode: 'cors'
     };
 
     return fetch(`${config.apiUrl}/user/signUp`, requestOptions).then(handleResponse);
